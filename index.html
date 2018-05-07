@@ -4,19 +4,28 @@
   <head>
     <meta charset="utf-8">
     <!-- Place framework CSS code here. -->
-    <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/leaflet.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
     <!-- CSS Imports -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css" integrity="sha256-iYUgmrapfDGvBrePJPrMWQZDcObdAcStKBpjP3Az+3s=" crossorigin="anonymous" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
-    <!-- Choose a frontend framework CSS file -->
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.css" />
+  </head>
     <body>
+      <!-- Start Page -->
+      <div id="slide1">
+        <div id="cover" class="bg">
+          <img id="front" src="Capture.png" width="100%" height="100%"/>
+          <h1 id="start-text">Exploring Philadelphia Housing Market</h1>
+          <button class="start-button" id="start"><span>Let's Go </span></button>
+        </div>
+      </div>
+
     <!-- Additional navigation sidebar to the left -->
-    <div class="miniSidebar">
+    <div id="slide2">
+    <div id="miniSidebar" class="miniSidebar">
       <div class="glyphicon glyphicon-globe" aria-hidden="true"></div>
       <ul class="nav nav-pills nav-stacked">
         <li role="presentation" class="active">
@@ -40,7 +49,7 @@
       </ul>
     </div>
     <!-- Sidebar -->
-    <div class="sidebar">
+    <div id="sidebar" class="sidebar">
       <nav class="navbar navbar-default">
         <div class="container-fluid clearfix">
           <!-- Title -->
@@ -51,94 +60,90 @@
         </nav>
         <div id="sidebar1">
         <button class="btn btn-default" id= "Animation"> Animation: Price to Rent Ratio (2010-2017) </button>
+        <button class="btn btn-default" id= "Stop"> Stop Animation </button>
+        <div id="cartoLink1">Check Map on Carto <a href="https://sophiehsw.carto.com/builder/2f8dcd88-ea60-4a5b-9924-e1ee089ab585/embed" title="CartoMap1">Carto Map</a>.</a> Created by Haishan Wu.</a></div>
         </div>
         <div id= "sidebar2">
-          <label class="container" id="container">Population
-            <input type="checkbox" checked="checked">
-            <span class="checkmark"></span>
-          </label>
-          <label class="container" id="container">Change in Population
-            <input type="checkbox">
-            <span class="checkmark"></span>
-          </label>
-          <label class="container" id="container">Median Sales Price
-            <input type="checkbox">
-            <span class="checkmark"></span>
-          </label>
-          <label class="container" id="container">Crime Index
-            <input type="checkbox">
-            <span class="checkmark"></span>
-          </label>
-          <label class="container" id="container">Median Age
-            <input type="checkbox">
-            <span class="checkmark"></span>
-          </label>
-          <button id="doFilter">Filter Results</button>
+          <div class="form-group">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="checkBox1">
+              <label class="custom-control-label" for="checkBox1">Price to Rent Ratio < 10 </label>
+              <button class="custom-control-button" id="colorLab1"></button>
+            </div>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="checkBox2">
+              <label class="custom-control-label" for="checkBox2"> Population > 33000</label>
+              <button class="custom-control-button" id="colorLab2"></button>
+            </div>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="checkBox3">
+              <label class="custom-control-label" for="checkBox3">Population Change > 0 </label>
+              <button class="custom-control-button" id="colorLab3"></button>
+            </div>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="checkBox4">
+              <label class="custom-control-label" for="checkBox4">Median Age < 35 </label>
+              <button class="custom-control-button" id="colorLab4"></button>
+            </div>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="checkBox5">
+              <label class="custom-control-label" for="checkBox5">Median Home Price < 154000 </label>
+              <button class="custom-control-button" id="colorLab5"></button>
+            </div>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="checkBox6">
+              <label class="custom-control-label" for="checkBox6">Crime Rate < 0.5 </label>
+              <button class="custom-control-button" id="colorLab6"></button>
+            </div>
+          </div>
         </div>
         <div id="sidebar3">
-          <button class="dropdown-btn">Select Zipcode
-            <i class="fa fa-caret-down"></i>
-          </button>
-          <div class="dropdown-container">
-            <a href="#">19143</a>
-            <a href="#">19111</a>
-            <a href="#">19124</a>
-            <a href="#">19120</a>
-            <a href="#">19134</a>
-            <a href="#">19148</a>
-            <a href="#">19104</a>
-            <a href="#">19145</a>
-            <a href="#">19146</a>
-            <a href="#">19147</a>
-            <a href="#">19139</a>
-            <a href="#">19103</a>
-            <a href="#">19128</a>
-            <a href="#">19132</a>
-            <a href="#">19115</a>
-            <a href="#">19130</a>
-            <a href="#">19114</a>
-            <a href="#">19152</a>
-            <a href="#">19141</a>
-            <a href="#">19116</a>
-            <a href="#">19136</a>
-            <a href="#">19138</a>
-            <a href="#">19154</a>
-            <a href="#">19151</a>
-            <a href="#">19135</a>
-            <a href="#">19119</a>
-            <a href="#">19128</a>
-            <a href="#">19142</a>
-            <a href="#">19150</a>
-            <a href="#">19122</a>
-            <a href="#">19122</a>
-            <a href="#">19133</a>
-            <a href="#">19107</a>
-            <a href="#">19123</a>
-            <a href="#">19106</a>
-            <a href="#">19126</a>
-            <a href="#">19153</a>
-            <a href="#">19129</a>
-            <a href="#">19118</a>
-            <a href="#">19102</a>
-            <a href="#">19137</a>
-            <a href="#">19127</a>
-          </div>
-          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-          Result </button>
+          <div id="intro">
+          <h4 id="introHeader"> Click on the map to know more about the area you are interested in. </h4>
+        </div>
+        <div id="results" style="display: none;">
+          <h4 class="Zipcode" id="resultHeader"></h4>
+          <br>
+          <h6 class="info" id="resultContent">Price to Rent (2017): <span class="PrictR17">PtoR17</span></h6>
+          <br>
+          <h4 class="info" id="resultContent">Population (2017): <span class="pop">pop</span></h4>
+          <br>
+          <h4 class="info" id="resultContent">Populatoin Change (2017): <span class="popchng">popchng</span></h4>
+          <br>
+          <h4 class="info" id="resultContent">Median Home Price (2017): <span class="medpric">medpric</span></h4>
+          <br>
+          <h4 class="info" id="resultContent">Crime Rate (2017): <span class="crime">crime</span></h4>
+        </div>
+      </div>
+    </div>
+    <!-- Map -->
+    <div id="map" class="map">
+      <div id="time-window"></div>
+    </div>
+    <div id="legend" class="legend">
+      <div class='legend-title'>Price to Rent</div>
+      <div class='legend-scale'>
+        <ul class='legend-labels'>
+          <li><span style='background:#800026;'></span> <p class="lab1"> less than 5</p></li>
+          <li><span style='background:#BD0026;'></span> <p class="lab2">5 to 7</p></li>
+          <li><span style='background:#E31A1C;'></span> <p class="lab3">7 to 8</p></li>
+          <li><span style='background:#FC4E2A;'></span> <p class="lab4">8 to 10</p></li>
+          <li><span style='background:#FD8D3C;'></span> <p class="lab5">10 to 13</p></li>
+          <li><span style='background:#FEB24C;'></span> <p class="lab6">13 to 15</p></li>
+          <li><span style='background:#FED976;'></span> <p class="lab7">15 to 25</p></li>
+        </ul>
       </div>
     </div>
   </div>
-    <!-- Map -->
-    <div id="map" class="map"></div>
     <!-- Javascript Imports -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js" integrity="sha256-CNm+7c26DTTCGRQkM9vp7aP85kHFMqs9MhPEuytF+fQ=" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="js/torque.full.js"></script>
+    <script src="js/underscore.js"></script>
     <!-- Place framework JS code here. -->
     <script src="js/setup.js"></script>
   </body>
